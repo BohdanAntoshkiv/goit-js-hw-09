@@ -34,11 +34,14 @@ const myPicker = flatpickr(refs.dataPicker, options)
 console.log(startTimer);
 
 function startTimer() {
-    setInterval(
+    let timerId = setInterval(
         () => {
             const pickedDate = myPicker.selectedDates[0].getTime();
             const timeDelta = pickedDate - new Date();
-            setTimerRender(timeDelta)
+            if (timeDelta < 1000) {
+                clearInterval(timerId)
+            }
+            setTimerRender(timeDelta);
         }, 1000
     )
 }
@@ -60,7 +63,9 @@ function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
-  const day = hour * 24;
+    const day = hour * 24;
+    
+    
 
   // Remaining days
   const days = Math.floor(ms / day);
